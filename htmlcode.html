@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Management System</title>
+    <style>
+        /* styles.css */
+
+        /* Reset some default styles */
+        body, h1, h2, p, ul, li, form {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        /* Set a gradient background */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header styles */
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main content styles */
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Section styles */
+        section {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #007BFF;
+            margin-bottom: 10px;
+        }
+
+        /* Form styles */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        /* Footer styles */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bank Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="#new-account">New Account</a></li>
+                <li><a href="#deposit">Deposit Amount</a></li>
+                <li><a href="#withdraw">Withdraw Amount</a></li>
+                <li><a href="#balance">Balance Enquiry</a></li>
+                <li><a href="#all-accounts">All Account Holders</a></li>
+                <li><a href="#close-account">Close Account</a></li>
+                <li><a href="#modify-account">Modify Account</a></li>
+                <li><a href="#exit">Exit</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="new-account">
+            <h2>Create New Account</h2>
+            <form>
+                <label for="accNo">Account Number:</label>
+                <input type="number" id="accNo" name="accNo" required>
+                <label for="name">Account Holder Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="type">Account Type (C/S):</label>
+                <input type="text" id="type" name="type" required>
+                <label for="deposit">Initial Deposit:</label>
+                <input type="number" id="deposit" name="deposit" required>
+                <button type="submit">Create Account</button>
+            </form>
+        </section>
+
+        <section id="deposit">
+            <h2>Deposit Amount</h2>
+            <form>
+                <label for="depositAccNo">Account Number:</label>
+                <input type="number" id="depositAccNo" name="depositAccNo" required>
+                <label for="depositAmount">Amount to Deposit:</label>
+                <input type="number" id="depositAmount" name="depositAmount" required>
+                <button type="submit">Deposit</button>
+            </form>
+        </section>
+
+        <section id="withdraw">
+            <h2>Withdraw Amount</h2>
+            <form>
+                <label for="withdrawAccNo">Account Number:</label>
+                <input type="number" id="withdrawAccNo" name="withdrawAccNo" required>
+                <label for="withdrawAmount">Amount to Withdraw:</label>
+                <input type="number" id="withdrawAmount" name="withdrawAmount" required>
+                <button type="submit">Withdraw</button>
+            </form>
+        </section>
+
+        <section id="balance">
+            <h2>Balance Enquiry</h2>
+            <form>
+                <label for="balanceAccNo">Account Number:</label>
+                <input type="number" id="balanceAccNo" name="balanceAccNo" required>
+                <button type="submit">Check Balance</button>
+            </form>
+        </section>
+
+        <section id="all-accounts">
+            <h2>All Account Holders</h2>
+            <button onclick="displayAllAccounts()">Show All Accounts</button>
+            <div id="accountList"></div>
+        </section>
+
+        <section id="close-account">
+            <h2>Close Account</h2>
+            <form>
+                <label for="closeAccNo">Account Number:</label>
+                <input type="number" id="closeAccNo" name="closeAccNo" required>
+                <button type="submit">Close Account</button>
+            </form>
+        </section>
+
+        <section id="modify-account">
+            <h2>Modify Account</h2>
+            <form>
+                <label for="modifyAccNo">Account Number:</label>
+                <input type="number" id="modifyAccNo" name="modifyAccNo" required>
+                <label for="newName">New Account Holder Name:</label>
+                <input type="text" id="newName" name="newName" required>
+                <label for="newType">New Account Type:</label>
+                <input type="text" id="newType" name="newType" required>
+                <label for="newDeposit">New Deposit Amount:</label>
+                <input type="number" id="newDeposit" name="newDeposit" required>
+                <button type="submit">Modify Account</button>
+            </form>
+        </section>
+
+        <section id="exit">
+            <h2>Exit</h2>
+            <p>Thank you for using the Bank Management System!</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Bank Management System</p>
+    </footer>
+
+    <script>
+        // Sample data structure to hold account information
+        let accounts = [];
+
+        // Function to create a new account
+        function createAccount(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const accNo = document.getElementById('accNo').value;
+            const name = document.getElementById('name').value;
+            const type = document.getElementById('type').value;
+            const deposit = parseFloat(document.getElementById('deposit').value);
+
+            // Check if account number already exists
+            if (accounts.some(account => account.accNo === accNo)) {
+                alert("Account number already exists!");
+                return;
+            }
+
+            // Create a new account object
+            const newAccount = {
+                accNo: accNo,
+                name: name,
+                type: type,
+                deposit: deposit
+            };
+
+            // Add the new account to the accounts array
+            accounts.push(newAccount);
+            alert("Account created successfully!");
+
+            // Clear the form
+            document.querySelector('#new-account form').reset();
+        }
+
+        // Function to deposit an amount
+        function depositAmount(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const accNo = document.getElementById('depositAccNo').value;
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+
+            const account = accounts.find(account => account.accNo === accNo);
+            if (account) {
+                account.deposit += amount;
+                alert("Amount deposited successfully!");
+            } else {
+                alert("Account not found!");
+            }
+
+            // Clear the form
+            document.querySelector('#deposit form').reset();
+        }
+
+        // Function to withdraw an amount
+        function withdrawAmount(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const accNo = document.getElementById('withdrawAccNo').value;
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+
+            const account = accounts.find(account => account.accNo === accNo);
+            if (account) {
+                if (amount <= account.deposit) {
+                    account.deposit -= amount;
+                    alert("Amount withdrawn successfully!");
+                } else {
+                    alert("Insufficient balance!");
+                }
+            } else {
+                alert("Account not found!");
+            }
+
+            // Clear the form
+            document.querySelector('#withdraw form').reset();
+        }
+
+        // Function to check balance
+        function checkBalance(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const accNo = document.getElementById('balanceAccNo').value;
+            const account = accounts.find(account => account.accNo === accNo);
+            if (account) {
+                alert(`Your account balance is: $${account.deposit}`);
+            } else {
+                alert("Account not found!");
+            }
+
+            // Clear the form
+            document.querySelector('#balance form').reset();
+        }
+
+        // Function to display all accounts
+        function displayAllAccounts() {
+            const accountListDiv = document.getElementById('accountList');
+            accountListDiv.innerHTML = ""; // Clear previous list
+
+            if (accounts.length === 0) {
+                accountListDiv.innerHTML = "<p>No accounts available.</p>";
+                return;
+            }
+
+            accounts.forEach(account => {
+                const accountInfo = document.createElement('p');
+                accountInfo.textContent = `Account No:  ₹{account.accNo}, Name:  ₹{account.name}, Type:  ₹{account.type}, Balance:  ₹ ₹{account.deposit}`;
+                accountListDiv.appendChild(accountInfo);
+            });
+        }
+
+        // Function to close an account
+        function closeAccount(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const accNo = document.getElementById('closeAccNo').value;
+            accounts = accounts.filter(account => account.accNo !== accNo);
+            alert("Account closed successfully!");
+
+            // Clear the form
+            document.querySelector('#close-account form').reset();
+        }
+
+        // Function to modify an account
+        function modifyAccount(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const accNo = document.getElementById('modifyAccNo').value;
+            const newName = document.getElementById('newName').value;
+            const newType = document.getElementById('newType').value;
+            const newDeposit = parseFloat(document.getElementById('newDeposit').value);
+
+            const account = accounts.find(account => account.accNo === accNo);
+            if (account) {
+                account.name = newName;
+                account.type = newType;
+                account.deposit = newDeposit;
+                alert("Account modified successfully!");
+            } else {
+                alert("Account not found!");
+            }
+
+            // Clear the form
+            document.querySelector('#modify-account form').reset();
+        }
+
+        // Attach event listeners to forms
+        document.querySelector('#new-account form').addEventListener('submit', createAccount);
+        document.querySelector('#deposit form').addEventListener('submit', depositAmount);
+        document.querySelector('#withdraw form').addEventListener('submit', withdrawAmount);
+        document.querySelector('#balance form').addEventListener('submit', checkBalance);
+        document.querySelector('#close-account form').addEventListener('submit', closeAccount);
+        document.querySelector('#modify-account form').addEventListener('submit', modifyAccount);
+    </script>
+</body>
+</html>
